@@ -20,7 +20,7 @@
             android:name=".FunCenterServiceActivity"
             android:exported="true"
             android:enabled="true"
-            android:permission="com.cs478.funcenter.GEN_ID"
+            android:permission="com.cs478.KeyComon.GEN_ID"
             />
         <activity
             android:name=".MainActivity"

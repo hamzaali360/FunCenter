@@ -2,6 +2,7 @@ package com.cs478.funcenter;
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
@@ -9,6 +10,8 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import com.cs478.KeyComon.FunCenterService;
 
 import java.security.Provider;
 import java.util.HashSet;
@@ -33,6 +36,36 @@ public class FunCenterServiceActivity extends Service {
     private final static Set<UUID> mIDs = new HashSet<UUID>();
 
     private final FunCenterService.Stub mBinder = new FunCenterService.Stub() {
+
+        @Override
+        public Bitmap[] getPicture(int pictureNumber) throws RemoteException {
+            return new Bitmap[0];
+        }
+
+        @Override
+        public void playAudio(int audioNumber) throws RemoteException {
+
+        }
+
+        @Override
+        public void pauseAudio() throws RemoteException {
+
+        }
+
+        @Override
+        public void resumeAudio() throws RemoteException {
+
+        }
+
+        @Override
+        public void stopAudio() throws RemoteException {
+
+        }
+
+        @Override
+        public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
+
+        }
 
         // Implement the remote method
         public String[] getKey() {
