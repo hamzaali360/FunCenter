@@ -1,5 +1,5 @@
 // FunCenterService.aidl
-package com.cs478.funcenter;
+package com.cs478.KeyComon;
 
 // Declare any non-default types here with import statements
 

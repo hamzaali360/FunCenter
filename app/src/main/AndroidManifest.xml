@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cs478.funcenter">
+    <permission
+        android:name="course.examples.Services.KeyService.GEN_ID"
+        android:protectionLevel="dangerous"
+        android:label="Allow requesting unique key" >
+    </permission>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,7 +20,7 @@
             android:name=".FunCenterServiceActivity"
             android:exported="true"
             android:enabled="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:permission="com.cs478.funcenter.GEN_ID"
             />
         <activity
             android:name=".MainActivity"
