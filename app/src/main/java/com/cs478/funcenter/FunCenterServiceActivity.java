@@ -3,6 +3,7 @@ package com.cs478.funcenter;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
@@ -14,52 +15,99 @@ import androidx.annotation.Nullable;
 import com.cs478.KeyComon.FunCenterService;
 
 import java.security.Provider;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 
 public class FunCenterServiceActivity extends Service {
+    List<Bitmap> pictures = new ArrayList<Bitmap>();
+    private boolean isPlaying = false;
+    private MediaPlayer mediaPlayer;
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("KeyGeneratorService", "Servive was created!") ;
+        Log.i("Images", "Servive was created!") ;
+        pictures.add(BitmapFactory.decodeResource(getResources(), R.raw.hsr));
+        pictures.add(BitmapFactory.decodeResource(getResources(), R.raw.hsrtl));
+        pictures.add(BitmapFactory.decodeResource(getResources(), R.raw.zelda));
+
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
-    private MediaPlayer mediaPlayer;
-    private final static Set<UUID> mIDs = new HashSet<UUID>();
+
 
     private final FunCenterService.Stub mBinder = new FunCenterService.Stub() {
 
         @Override
-        public Bitmap[] getPicture(int pictureNumber) throws RemoteException {
-            return new Bitmap[0];
+        public Bitmap getPicture(int pictureNumber) throws RemoteException {
+            Bitmap pic;
+            synchronized (pictures) {
+                pic = pictures.get(pictureNumber);
+            }
+            return pic;
         }
 
         @Override
         public void playAudio(int audioNumber) throws RemoteException {
+            if(isPlaying == true) {
+                Log.i("player", "music is already playing");
+                return;
+            }
+            switch(audioNumber) {
+                case 0:
+                    mediaPlayer = MediaPlayer.create(FunCenterServiceActivity.this, R.raw.hsrtrain);
+                    break;
+                case 1:
+                    mediaPlayer = MediaPlayer.create(FunCenterServiceActivity.this, R.raw.hsrtrailer);
+                    break;
+                case 2:
+                    mediaPlayer = MediaPlayer.create(FunCenterServiceActivity.this, R.raw.zeldasong);
+                    break;
+                default:
+                    break;
+            }
+            mediaPlayer.start();
+            if(mediaPlayer != null) {
+                mediaPlayer.setVolume(100, 100);
+                mediaPlayer.setLooping(true);
+            }
+            isPlaying = true;
+            return;
 
         }
 
         @Override
         public void pauseAudio() throws RemoteException {
-
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                return;
+            }
         }
 
         @Override
         public void resumeAudio() throws RemoteException {
-
+            if(!mediaPlayer.isPlaying()) {
+                mediaPlayer.start();
+                return;
+            }
         }
 
         @Override
         public void stopAudio() throws RemoteException {
-
+            if(mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                isPlaying = false;
+                return;
+            }
         }
 
         @Override
@@ -67,30 +115,6 @@ public class FunCenterServiceActivity extends Service {
 
         }
 
-        // Implement the remote method
-        public String[] getKey() {
-
-            UUID id;
-
-            // Acquire lock to ensure exclusive access to mIDs
-            // Then examine and modify mIDs
-
-            //enforceCallingPermission("course.examples.Services.KeyService.GEN_ID", "TODO: message if thrown") ;
-            synchronized (mIDs) {
-
-                do {
-
-                    id = UUID.randomUUID();
-
-                } while (mIDs.contains(id));
-
-                mIDs.add(id);
-            }
-            String[] s;
-            s = new String[]{ id.toString()};
-            Log.i("Ugo says", "String is: " + s[0]) ;
-            return s;
-        }
     };
 //    @Override
 //    public IBinder onBind(Intent intent) {

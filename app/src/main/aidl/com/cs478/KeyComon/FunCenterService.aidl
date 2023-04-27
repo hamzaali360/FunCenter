@@ -4,7 +4,7 @@ package com.cs478.KeyComon;
 // Declare any non-default types here with import statements
 
 interface FunCenterService {
-    Bitmap[] getPicture(int pictureNumber);
+    Bitmap getPicture(int pictureNumber);
     void playAudio(int audioNumber);
     void pauseAudio();
     void resumeAudio();
