@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cs478.funcenter">
     <permission
-        android:name="course.examples.Services.KeyService.GEN_ID"
+        android:name="com.cs478.funcenter.GEN_ID"
         android:protectionLevel="dangerous"
         android:label="Allow requesting unique key" >
     </permission>
@@ -20,8 +20,12 @@
             android:name=".FunCenterServiceActivity"
             android:exported="true"
             android:enabled="true"
-            android:permission="com.cs478.KeyComon.GEN_ID"
-            />
+            >
+            <intent-filter>
+                <action android:name="com.cs478.KeyComon.FunCenterService" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

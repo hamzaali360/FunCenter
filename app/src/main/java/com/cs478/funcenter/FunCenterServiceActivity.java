@@ -89,6 +89,7 @@ public class FunCenterServiceActivity extends Service {
         public void pauseAudio() throws RemoteException {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.pause();
+                isPlaying = false;
                 return;
             }
         }
@@ -97,6 +98,7 @@ public class FunCenterServiceActivity extends Service {
         public void resumeAudio() throws RemoteException {
             if(!mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
+                isPlaying = true;
                 return;
             }
         }
