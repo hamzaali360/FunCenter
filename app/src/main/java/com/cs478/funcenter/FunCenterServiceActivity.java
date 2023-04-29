@@ -46,7 +46,7 @@ public class FunCenterServiceActivity extends Service {
 
 
     private final FunCenterService.Stub mBinder = new FunCenterService.Stub() {
-
+        // return the selected image to client
         @Override
         public Bitmap getPicture(int pictureNumber) throws RemoteException {
             Bitmap pic;
@@ -55,7 +55,7 @@ public class FunCenterServiceActivity extends Service {
             }
             return pic;
         }
-
+        // plays the selected song
         @Override
         public void playAudio(int audioNumber) throws RemoteException {
             if(isPlaying == true) {
@@ -76,6 +76,7 @@ public class FunCenterServiceActivity extends Service {
                     break;
             }
             mediaPlayer.start();
+            // when there's music exist, play volume to the max and have a loop
             if(mediaPlayer != null) {
                 mediaPlayer.setVolume(100, 100);
                 mediaPlayer.setLooping(true);
@@ -84,7 +85,7 @@ public class FunCenterServiceActivity extends Service {
             return;
 
         }
-
+        // pauses the player song
         @Override
         public void pauseAudio() throws RemoteException {
             if (mediaPlayer.isPlaying()) {
@@ -93,7 +94,7 @@ public class FunCenterServiceActivity extends Service {
                 return;
             }
         }
-
+        // resumes the player song
         @Override
         public void resumeAudio() throws RemoteException {
             if(!mediaPlayer.isPlaying()) {
@@ -102,7 +103,7 @@ public class FunCenterServiceActivity extends Service {
                 return;
             }
         }
-
+        // stops the player song
         @Override
         public void stopAudio() throws RemoteException {
             if(mediaPlayer.isPlaying()) {
@@ -118,67 +119,5 @@ public class FunCenterServiceActivity extends Service {
         }
 
     };
-//    @Override
-//    public IBinder onBind(Intent intent) {
-//        return new FunCenterService.Stub() {
-//            @Override
-//            public int getPicture(int number) throws RemoteException {
-//                // TODO: Implement getPicture method
-//                return 0;
-//            }
-//
-//            @Override
-//            public void playAudio(int number) throws RemoteException {
-//                if (mediaPlayer == null) {
-//                    mediaPlayer = MediaPlayer.create(FunCenterService.this, getAudioResourceId(number));
-//                }
-//                mediaPlayer.start();
-//            }
-//
-//            @Override
-//            public void pauseAudio() throws RemoteException {
-//                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-//                    mediaPlayer.pause();
-//                }
-//            }
-//
-//            @Override
-//            public void resumeAudio() throws RemoteException {
-//                if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-//                    mediaPlayer.start();
-//                }
-//            }
-//
-//            @Override
-//            public void stopAudio() throws RemoteException {
-//                if (mediaPlayer != null) {
-//                    mediaPlayer.stop();
-//                    mediaPlayer.release();
-//                    mediaPlayer = null;
-//                }
-//            }
-//        };
-//    }
-//
-//    private int getAudioResourceId(int number) {
-//        switch (number) {
-//            case 1:
-//                return R.raw.audio1;
-//            case 2:
-//                return R.raw.audio2;
-//            case 3:
-//                return R.raw.audio3;
-//            default:
-//                return 0;
-//        }
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        if (mediaPlayer != null) {
-//            mediaPlayer.release();
-//            mediaPlayer = null;
-//        }
-//    }
+
 }
